@@ -1,12 +1,13 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Resource} from "../model/resource.interface";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { ResourceDto } from '../model/resource-dto.interface';
+import { Resource } from '../model/resource.interface';
 
 @Injectable({
 	providedIn: 'root'
 })
-export class ResourcesService {
+export class ResourcesDataSourceService {
 	
 	baseUrl: string = 'http://localhost:3000';
 	
@@ -37,7 +38,7 @@ export class ResourcesService {
 		});
 	}
 	
-	getResourcesSize(name: string): Observable<number> {
+	getResourcesSize(name?: string): Observable<number> {
 		let params = new HttpParams();
 		
 		if (name) {
@@ -52,15 +53,19 @@ export class ResourcesService {
 		return this.httpClient.get<Resource>(`${this.baseUrl}/${id}`);
 	}
 	
-	addResource(resource: Resource): Observable<string> {
-		return this.httpClient.post<string>(`${this.baseUrl}`, resource);
+	addResource(resourceDto: ResourceDto): Observable<string> {
+		return this.httpClient.post<string>(`${this.baseUrl}`, resourceDto);
 	}
 	
 	deleteResource(id: number): Observable<string> {
 		return this.httpClient.delete<string>(`${this.baseUrl}/${id}`);
 	}
 	
-	updateResource(resource: Resource): Observable<string> {
-		return this.httpClient.put<string>(`${this.baseUrl}`, resource);
+	updateResource(resourceDto: ResourceDto): Observable<string> {
+		return this.httpClient.put<string>(`${this.baseUrl}`, resourceDto);
+	}
+	
+	showResourcePassword(id: number): Observable<string> {
+		return this.httpClient.get<string>(`${this.baseUrl}/password/${id}`);
 	}
 }

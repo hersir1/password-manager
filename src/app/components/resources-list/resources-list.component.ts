@@ -1,13 +1,16 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {forkJoin, Subject} from "rxjs";
-import {Resource} from "../../model/resource.interface";
-import {NzTableQueryParams} from "ng-zorro-antd/table";
-import {ResourcesService} from "../../services/resources.service";
-import {debounceTime, finalize, switchMap, tap} from "rxjs/operators";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {ISearchParams} from "../../model/search-params.interface";
-import {NzModalService} from "ng-zorro-antd/modal";
-import {AddResourceModalComponent} from "../add-resource-modal/add-resource-modal.component";
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Resource } from '../../model/resource.interface';
+import { forkJoin, Subject } from 'rxjs';
+import { ISearchParams } from '../../model/search-params.interface';
+import { ResourcesDataSourceService } from '../../services/resources-data-source.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { debounceTime, finalize, switchMap, tap } from 'rxjs/operators';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { AddResourceModalComponent } from '../add-resource-modal/add-resource-modal.component';
+import { EditResourceModalComponent } from '../edit-resource-modal/edit-resource-modal.component';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { ShowPasswordModalComponent } from '../show-password-modal/show-password-modal.component';
 
 @UntilDestroy()
 @Component({
@@ -31,8 +34,9 @@ export class ResourcesListComponent implements OnInit, OnDestroy {
 	paramsChange$: Subject<ISearchParams> = new Subject<ISearchParams>();
 	
 	constructor(
-		private resourceService: ResourcesService,
-		private modal: NzModalService
+		private resourcesDataSourceService: ResourcesDataSourceService,
+		private modal: NzModalService,
+		private messageService: NzMessageService
 	) {
 	}
 	
@@ -43,14 +47,14 @@ export class ResourcesListComponent implements OnInit, OnDestroy {
 				untilDestroyed(this),
 				debounceTime(500),
 				switchMap(params => forkJoin([
-						this.resourceService.getResources(
+						this.resourcesDataSourceService.getResources(
 							params.pageIndex,
 							params.pageSize,
 							params.name,
 							params.sortColumn,
 							params.sortValue
 						),
-						this.resourceService.getResourcesSize(
+						this.resourcesDataSourceService.getResourcesSize(
 							params.name
 						)
 					])
@@ -87,7 +91,7 @@ export class ResourcesListComponent implements OnInit, OnDestroy {
 		});
 	}
 	
-	search() {
+	search(): void {
 		this.paramsChange$.next({
 			name: this.nameSearch,
 			sortColumn: this.sortColumn,
@@ -98,10 +102,86 @@ export class ResourcesListComponent implements OnInit, OnDestroy {
 	}
 	
 	showAddResourceModal(): void {
-		this.modal.create({
+		const modal = this.modal.create({
 			nzTitle: 'Добавление ресурса',
 			nzContent: AddResourceModalComponent,
-			nzFooter: null
+			nzFooter: null,
+			nzMaskClosable: false
+		});
+		
+		modal.afterClose.subscribe(response => {
+			if (response) {
+				this.paramsChange$.next({
+					pageSize: this.pageSize,
+					pageIndex: 1
+				});
+			}
+		});
+	}
+	
+	showEditResourceModal(id: number): void {
+		const modal = this.modal.create({
+			nzTitle: 'Редактирование ресурса',
+			nzContent: EditResourceModalComponent,
+			nzFooter: null,
+			nzMaskClosable: false,
+			nzComponentParams: {
+				id
+			}
+		});
+		
+		modal.afterClose.subscribe(response => {
+			if (response) {
+				this.paramsChange$.next({
+					pageSize: this.pageSize,
+					pageIndex: 1
+				});
+			}
+		});
+	}
+	
+	showDeleteModal(id: number): void {
+		this.modal.confirm({
+			nzTitle: 'Вы действительно хотите удалить запись?',
+			nzOnOk: () => this.deleteResource(id)
+		});
+	}
+	
+	deleteResource(id: number): void {
+		this.loading = true;
+		
+		this.resourcesDataSourceService.deleteResource(id)
+			.pipe(
+				finalize(() => {
+					this.loading = false;
+				})
+			)
+			.subscribe(response => {
+				this.messageService.success(response);
+				this.paramsChange$.next({
+					pageSize: this.pageSize,
+					pageIndex: 1
+				});
+			});
+	}
+	
+	showResourcePasswordModal(id: number): void {
+		this.modal.confirm({
+			nzTitle: '<b>Вы уверены, что хотите просмотреть свой пароль?</b>',
+			nzContent: '<b>Убедитесь, что никто кроме вас его не увидит</b>',
+			nzOnOk: () => this.showResourcePassword(id)
+		});
+	}
+	
+	showResourcePassword(id: number): void {
+		this.modal.create({
+			nzTitle: 'Просмотр пароля',
+			nzContent: ShowPasswordModalComponent,
+			nzFooter: null,
+			nzMaskClosable: false,
+			nzComponentParams: {
+				id
+			}
 		});
 	}
 	

@@ -37,9 +37,9 @@
 	<tbody>
 		<tr *ngFor="let data of resourcesTable.data">
 			<td>{{data.name}}</td>
-			<td>{{data.password}}</td>
-			<td><button nz-button nzType="primary">Редактировать</button></td>
-			<td><button nz-button nzType="danger">Удалить</button></td>
+			<td><button nz-button nzDanger (click)="showResourcePasswordModal(data.id)">Показать пароль</button></td>
+			<td><button nz-button nzType="primary" (click)="showEditResourceModal(data.id)">Редактировать</button></td>
+			<td><button nz-button nzDanger nzType="primary" (click)="showDeleteModal(data.id)">Удалить</button></td>
 		</tr>
 	</tbody>
 </nz-table>

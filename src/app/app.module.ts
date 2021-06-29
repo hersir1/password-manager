@@ -24,6 +24,8 @@ import {NzInputModule} from "ng-zorro-antd/input";
 import {NzFormModule} from "ng-zorro-antd/form";
 import {NzModalService} from "ng-zorro-antd/modal";
 import {NzMessageService} from "ng-zorro-antd/message";
+import { ShowPasswordModalComponent } from './components/show-password-modal/show-password-modal.component';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 registerLocaleData(ru);
 
@@ -32,7 +34,8 @@ registerLocaleData(ru);
 		AppComponent,
 		ResourcesListComponent,
 		AddResourceModalComponent,
-		EditResourceModalComponent
+		EditResourceModalComponent,
+  ShowPasswordModalComponent
 	],
 	imports: [
 		BrowserModule,
@@ -50,7 +53,8 @@ registerLocaleData(ru);
 		NzDropDownModule,
 		NzInputModule,
 		NzFormModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		NzSpinModule
 	],
 	providers: [
 		{provide: NZ_I18N, useValue: ru_RU},

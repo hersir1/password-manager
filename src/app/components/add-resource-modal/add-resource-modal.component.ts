@@ -1,9 +1,10 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ResourcesService} from "../../services/resources.service";
-import {finalize} from "rxjs/operators";
-import {NzModalRef} from "ng-zorro-antd/modal";
-import {NzMessageService} from "ng-zorro-antd/message";
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ResourcesDataSourceService } from '../../services/resources-data-source.service';
+import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+import { finalize } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-add-resource-modal',
@@ -18,7 +19,7 @@ export class AddResourceModalComponent {
 	
 	constructor(
 		private formBuilder: FormBuilder,
-		private resourceService: ResourcesService,
+		private resourcesDataSourceService: ResourcesDataSourceService,
 		private messageService: NzMessageService,
 		private modal: NzModalRef
 	) {
@@ -28,11 +29,10 @@ export class AddResourceModalComponent {
 		});
 	}
 	
-	addResource(): void {
-		console.log(this.form.value)
-		/*const actionMessageId = this.messageService.loading('Идёт добавление').messageId;
+	async addResource(): Promise<void> {
+		const actionMessageId = this.messageService.loading('Идёт добавление').messageId;
 		
-		this.resourceService.addResource(this.form.value)
+		this.resourcesDataSourceService.addResource(this.form.value)
 			.pipe(
 				finalize(() => {
 					this.messageService.remove(actionMessageId);
@@ -40,8 +40,8 @@ export class AddResourceModalComponent {
 			)
 			.subscribe(response => {
 				this.messageService.success(response);
-				this.modal.close();
-			});*/
+				this.modal.close({data: true});
+			});
 	}
 	
 	closeModal(): void {
