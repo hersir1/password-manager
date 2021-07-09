@@ -1,16 +1,24 @@
-[nz-form] {
-	&.user-form {
-		margin: 0 auto;
-		
-		button {
-			width: 100%;
-		}
-	}
+form {
 	width: 400px;
+	margin: 0 auto;
 }
 
-nz-form-item {
-	display: block;
+.control-container {
+	height: 60px;
+
+	.input-group-error {
+		border: 1px solid red;
+	}
+
+	span {
+		color: red;
+	}
+}
+
+.button-panel {
+	display: flex;
+
+	margin-top: 1rem;
 }
 
 h1 {
@@ -19,4 +27,8 @@ h1 {
 
 .cancel-button {
 	margin-left: 1rem;
+}
+
+.register-link {
+	margin-top: 1rem;
 }
