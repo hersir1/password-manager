@@ -1,0 +1,43 @@
+<form [formGroup]="formGroup" (ngSubmit)="login()">
+    <h1>Вход</h1>
+    <div class="control-container">
+        <nz-input-group nzPrefixIcon="user"
+                        [ngClass]="{'input-group-error': formGroup.get('email')?.touched && formGroup.get('email')?.invalid}"
+        >
+            <input type="text" nz-input formControlName="loginOrEmail" placeholder="Имя пользователя или почта" />
+        </nz-input-group>
+        <ng-container *ngIf="formGroup.get('loginOrEmail')?.touched && formGroup.get('loginOrEmail')?.hasError('required')">
+            <span>Введите логин или почту</span>
+        </ng-container>
+    </div>
+    <div class="control-container">
+        <nz-input-group
+                nzPrefixIcon="lock"
+                [ngClass]="{'input-group-error': formGroup.get('password')?.touched && formGroup.get('password')?.invalid}"
+                [nzSuffix]="suffixTemplate"
+        >
+                <input [type]="passwordVisible ? 'text' : 'password'" nz-input placeholder="Введите пароль" formControlName="password" />
+            <ng-template #suffixTemplate>
+                <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" (click)="passwordVisible = !passwordVisible"></i>
+            </ng-template>
+        </nz-input-group>
+        <span *ngIf="formGroup.get('password')?.touched && formGroup.get('password')?.hasError('required')">Введите пароль</span>
+    </div>
+    <div class="alert-panel">
+        <div *ngIf="userNameOrPasswordIsIncorrect$ | async">
+            <nz-alert nzType="error"
+                      nzMessage="Неверное имя пользователя или пароль"
+                      nzShowIcon
+            ></nz-alert>
+        </div>
+    </div>
+    <div class="button-panel">
+        <button nz-button nzType="primary" [nzLoading]="loading$ | async" [disabled]="formGroup.invalid">
+            Войти
+            <i nz-icon nzType="enter" nzTheme="outline"></i>
+        </button>
+    </div>
+    <div class="register-link">
+        или <a [routerLink]="['/register']"> зарегистрируйтесь </a>
+    </div>
+</form>
