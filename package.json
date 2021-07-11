@@ -10,8 +10,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "ng build && electron .",
-    "pack": "electron-packager . --overwrite",
-    "pack-prod": "ng build && electron-packager . --overwrite --all"
+    "pack": "ng build && electron-packager . --overwrite --out=C:\\Users\\User\\Desktop",
+    "pack-prod": "ng build --prod && electron-packager . --overwrite --mac --win --out=C:\\Users\\User\\Desktop"
   },
   "private": true,
   "dependencies": {

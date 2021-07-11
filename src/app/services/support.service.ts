@@ -6,7 +6,7 @@ import { delay, retryWhen } from 'rxjs/operators';
 @Injectable()
 export class SupportService {
 	
-	baseUrl: string = 'http://localhost:3000/ping';
+	baseUrl: string = 'http://localhost:3000';
 	
 	constructor(
 		private httpClient: HttpClient
@@ -14,7 +14,7 @@ export class SupportService {
 	}
 	
 	pingServer(): Observable<boolean> {
-		return this.httpClient.get<boolean>(this.baseUrl)
+		return this.httpClient.get<boolean>(`${this.baseUrl}/ping`)
 			.pipe(
 				retryWhen(errors => errors.pipe(delay(2000)))
 			);
