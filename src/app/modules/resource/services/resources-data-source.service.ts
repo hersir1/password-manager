@@ -4,9 +4,7 @@ import { Observable } from 'rxjs';
 import { ResourceDto } from '../models/resource-dto.interface';
 import { Resource } from '../models/resource.interface';
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class ResourcesDataSourceService {
 	
 	baseUrl: string = 'http://localhost:3000/resource';

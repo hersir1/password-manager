@@ -16,11 +16,14 @@ export class ErrorInterceptor implements HttpInterceptor {
 	}
 	
 	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-		return next.handle(request).pipe(
-			catchError((err: HttpErrorResponse) => {
-				this.modalService.createErrorModal(err.error);
-				return throwError(err);
-			})
-		);
+		if (!request.url.includes('ping')) {
+			return next.handle(request).pipe(
+				catchError((err: HttpErrorResponse) => {
+					this.modalService.createErrorModal(err.error);
+					return throwError(err);
+				})
+			);
+		}
+		return next.handle(request);
 	}
 }

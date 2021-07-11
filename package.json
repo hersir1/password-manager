@@ -11,7 +11,7 @@
     "e2e": "ng e2e",
     "electron": "ng build && electron .",
     "pack": "electron-packager . --overwrite",
-    "pack-prod": "ng build && electron-packager . --overwrite --asar --all"
+    "pack-prod": "ng build && electron-packager . --overwrite --all"
   },
   "private": true,
   "dependencies": {

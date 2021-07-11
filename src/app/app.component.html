@@ -1,4 +1,4 @@
-<nz-layout>
+<nz-layout *ngIf="serverStarted; else serverStarting">
 	<nz-sider nzCollapsible [(nzCollapsed)]="sideMenuIsCollapsed" [nzWidth]="300">
 		<div class="logo">Это логотип</div>
 		<ul nz-menu nzTheme="dark" nzMode="inline">
@@ -26,3 +26,6 @@
 		<nz-footer>Footer</nz-footer>
 	</nz-layout>
 </nz-layout>
+<ng-template #serverStarting>
+	<app-start-app></app-start-app>
+</ng-template>
