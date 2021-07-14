@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import { UserDataSourceService } from '../../services/user-data-source.service';
 import { ActivatedRoute } from '@angular/router';
 import { PasswordConfirmationValidator } from '../../../../validators/password-confirmation.validator';
 import { finalize } from 'rxjs/operators';
@@ -9,6 +8,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { UserService } from '../../../../services/user.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { EditUserDataSourceService } from '../../services/edit-user-data-source.service';
 
 @UntilDestroy()
 @Component({
@@ -21,12 +21,15 @@ export class EditUserComponent implements OnInit {
 	
 	formGroup: FormGroup;
 	
+	passwordVisible: boolean = false;
+	confirmPasswordVisible: boolean = false;
+	
 	loading$: Subject<boolean> = new Subject<boolean>();
 	userIsExist$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	
 	constructor(
 		private location: Location,
-		private userDataSourceService: UserDataSourceService,
+		private editUserServiceDataSource: EditUserDataSourceService,
 		private activatedRoute: ActivatedRoute,
 		private formBuilder: FormBuilder,
 		private messageService: NzMessageService,
@@ -35,9 +38,14 @@ export class EditUserComponent implements OnInit {
 	}
 	
 	ngOnInit(): void {
-		this.activatedRoute.data
+		this.loading$.next(true);
+		
+		this.editUserServiceDataSource.getUserById(this.userService.user!.id)
 			.pipe(
-				untilDestroyed(this)
+				untilDestroyed(this),
+				finalize(() => {
+					this.loading$.next(false);
+				})
 			)
 			.subscribe(response => {
 				this.formGroup = this.formBuilder.group({
@@ -55,7 +63,7 @@ export class EditUserComponent implements OnInit {
 	editUser(): void {
 		this.loading$.next(true);
 		
-		this.userDataSourceService.updateUser(this.formGroup.value)
+		this.editUserServiceDataSource.updateUser(this.formGroup.value)
 			.pipe(
 				untilDestroyed(this),
 				finalize(() => {

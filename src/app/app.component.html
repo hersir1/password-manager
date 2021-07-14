@@ -1,31 +1,70 @@
 <nz-layout *ngIf="serverStarted; else serverStarting">
-	<nz-sider nzCollapsible [(nzCollapsed)]="sideMenuIsCollapsed" [nzWidth]="300">
-		<div class="logo">Это логотип</div>
-		<ul nz-menu nzTheme="dark" nzMode="inline">
-			<li nz-menu-item [routerLink]="['/settings']" nz-tooltip nzTooltipTitle="Настройки"
-			    nzTooltipPlacement="right" [nzTooltipVisible]="sideMenuIsCollapsed">
-				<i nz-icon nzType="setting" nzTheme="outline"></i>
-				<span>Настройки</span>
-			</li>
-			<li nz-menu-item [routerLink]="['/about']">
-				<i nz-icon nzType="info-circle" nzTheme="outline"></i>
-				<span>О приложении</span>
-			</li>
-		</ul>
-	</nz-sider>
-	<nz-layout>
-		<nz-header>
-			<i class="trigger" nz-icon [nzType]="sideMenuIsCollapsed ? 'menu-unfold' : 'menu-fold'"
-			   (click)="sideMenuIsCollapsed = !sideMenuIsCollapsed"></i>
-		</nz-header>
-		<nz-content>
-			<div class="inner-content">
-				<router-outlet></router-outlet>
-			</div>
-		</nz-content>
-		<nz-footer>Footer</nz-footer>
-	</nz-layout>
+    <nz-sider nzCollapsible [(nzCollapsed)]="sideMenuIsCollapsed" [nzWidth]="300">
+        <div class="logo">
+            <img src="assets/logo.svg" width="40px" height="40px">
+        </div>
+        <ul nz-menu nzTheme="dark" nzMode="inline">
+            <!--<li nz-menu-item [routerLink]="['/settings']" nz-tooltip nzTooltipTitle="Настройки"
+                nzTooltipPlacement="right" [nzTooltipVisible]="sideMenuIsCollapsed">
+                <i nz-icon nzType="setting" nzTheme="outline"></i>
+                <span>Настройки</span>
+            </li>-->
+            <ng-container *ngIf="userService.user">
+                <li nz-menu-item [routerLink]="['/']" nzMatchRouter nzMatchRouterExact>
+                    <i nz-icon nzType="unordered-list" nzTheme="outline"></i>
+                    <span>Список ресурсов</span>
+                </li>
+                <li nz-menu-item [routerLink]="['/user-info']" nzMatchRouter>
+                    <i nz-icon nzType="user" nzTheme="outline"></i>
+                    <span>Пользователь</span>
+                </li>
+            </ng-container>
+            <li nz-menu-item [routerLink]="['/about']" nzMatchRouter>
+                <i nz-icon nzType="info-circle" nzTheme="outline"></i>
+                <span>О приложении</span>
+            </li>
+            <li nz-menu-item (click)="logout()" nzMatchRouter>
+                <i nz-icon nzType="logout" nzTheme="outline"></i>
+                <span>Выйти</span>
+            </li>
+        </ul>
+    </nz-sider>
+    <nz-layout>
+        <nz-header>
+            <div class="header">
+                <div>
+                    <i class="trigger" nz-icon [nzType]="sideMenuIsCollapsed ? 'menu-unfold' : 'menu-fold'"
+                       (click)="sideMenuIsCollapsed = !sideMenuIsCollapsed"></i>
+                </div>
+                <ng-container *ngIf="userService.user">
+                    <div>
+                        <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomRight">
+                            <i nz-icon nzType="user" nzTheme="outline"></i>
+                            {{userService.user.login}}
+                            <i nz-icon nzType="down"></i>
+                        </button>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <ul nz-menu>
+                                <li nz-menu-item [routerLink]="['/user-info']">
+                                    <a>Пользователь</a>
+                                </li>
+                                <li nz-menu-item (click)="logout()">
+                                    <a>Выйти</a>
+                                </li>
+                            </ul>
+                        </nz-dropdown-menu>
+                    </div>
+                </ng-container>
+            </div>
+        </nz-header>
+        <nz-content>
+            <div class="inner-content">
+                <router-outlet></router-outlet>
+            </div>
+        </nz-content>
+        <!--<nz-footer>Footer</nz-footer>-->
+    </nz-layout>
 </nz-layout>
 <ng-template #serverStarting>
-	<app-start-app></app-start-app>
+    <app-start-app></app-start-app>
 </ng-template>

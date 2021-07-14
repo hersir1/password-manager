@@ -1,0 +1,20 @@
+.button-panel {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: 1rem;
+
+  > button:first-child {
+    margin-right: 1rem;
+  }
+}
+
+.loading {
+  margin-top: 1rem;
+}
+
+::ng-deep .userInfo {
+  .ant-descriptions-item-label {
+    font-weight: bold;
+  }
+}

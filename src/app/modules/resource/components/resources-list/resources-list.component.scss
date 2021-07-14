@@ -1,0 +1,13 @@
+::ng-deep #resourceList {
+  .tableHeader {
+    text-align: center !important;
+  }
+
+  .tableTdAction {
+    text-align: center;
+
+    button {
+      width: 147px;
+    }
+  }
+}

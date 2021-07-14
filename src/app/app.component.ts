@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { SupportService } from './services/support.service';
+import { UserService } from './services/user.service';
+import { Router } from '@angular/router';
+
+/* TODO
+*   1) Если забыл мастер пароль (восстановление)
+*   2) стоп сервер
+* */
 
 @Component({
 	selector: 'app-root',
@@ -11,12 +18,21 @@ export class AppComponent implements OnInit {
 	sideMenuIsCollapsed: boolean = false;
 	serverStarted: boolean = false;
 	
-	constructor(private supportService: SupportService) {
+	constructor(
+		private supportService: SupportService,
+		public userService: UserService,
+		private router: Router
+	) {
 	}
 	
 	ngOnInit(): void {
 		this.supportService.pingServer().subscribe(response => {
 			this.serverStarted = response;
 		});
+	}
+	
+	logout(): void {
+		this.userService.user = null;
+		this.router.navigate(['login']);
 	}
 }

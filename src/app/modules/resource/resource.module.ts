@@ -22,7 +22,8 @@ const NgZorroModules = [
 	NzButtonModule,
 	NzTableModule,
 	NzEmptyModule,
-	NzSpinModule
+	NzSpinModule,
+	NzAlertModule
 ];
 
 @NgModule({
@@ -37,8 +38,7 @@ const NgZorroModules = [
 		ReactiveFormsModule,
 		FormsModule,
 		ResourceRoutingModule,
-		...NgZorroModules,
-		NzAlertModule
+		...NgZorroModules
 	],
 	providers: [
 		ResourceService,

@@ -34,11 +34,12 @@ export class ResourcesListComponent implements OnInit {
 	nameSearch: string;
 	
 	paramsChange$: Subject<ISearchParams> = new Subject<ISearchParams>();
+	nameSearchChange$: Subject<string | null> = new Subject<string | null>();
 	
 	constructor(
 		private resourcesDataSourceService: ResourcesDataSourceService,
-		private modal: NzModalService,
-		private messageService: NzMessageService,
+		private nzModalService: NzModalService,
+		private nzMessageService: NzMessageService,
 		private userService: UserService
 	) {
 	}
@@ -47,15 +48,13 @@ export class ResourcesListComponent implements OnInit {
 		/*TODO после удаления loading здесь не отрабатывает*/
 		this.paramsChange$
 			.pipe(
-				debounceTime(1000),
-				distinctUntilChanged((prev, curr) => prev.name === curr.name),
 				tap((param) => {
 					this.loading$.next(true);
 				}),
 				untilDestroyed(this),
 				switchMap(params => forkJoin([
 						this.resourcesDataSourceService.getResources(
-							this.userService.user.id,
+							this.userService.user!.id,
 							params.pageIndex,
 							params.pageSize,
 							params.name,
@@ -63,7 +62,7 @@ export class ResourcesListComponent implements OnInit {
 							params.sortValue
 						),
 						this.resourcesDataSourceService.getResourcesSize(
-							this.userService.user.id,
+							this.userService.user!.id,
 							params.name
 						)
 					])
@@ -78,6 +77,16 @@ export class ResourcesListComponent implements OnInit {
 			.subscribe(responseList => {
 				this.resources = responseList[0];
 				this.total = responseList[1];
+			});
+		
+		this.nameSearchChange$
+			.pipe(
+				untilDestroyed(this),
+				debounceTime(1000),
+				distinctUntilChanged((prev, curr) => prev === curr),
+			)
+			.subscribe(value => {
+				this.search(value);
 			});
 	}
 	
@@ -112,7 +121,7 @@ export class ResourcesListComponent implements OnInit {
 	}
 	
 	showAddResourceModal(): void {
-		const modal = this.modal.create({
+		const modal = this.nzModalService.create({
 			nzTitle: 'Добавление ресурса',
 			nzContent: AddResourceModalComponent,
 			nzFooter: null,
@@ -134,7 +143,7 @@ export class ResourcesListComponent implements OnInit {
 	}
 	
 	showEditResourceModal(id: number): void {
-		const modal = this.modal.create({
+		const modal = this.nzModalService.create({
 			nzTitle: 'Редактирование ресурса',
 			nzContent: EditResourceModalComponent,
 			nzFooter: null,
@@ -159,7 +168,7 @@ export class ResourcesListComponent implements OnInit {
 	}
 	
 	showDeleteModal(id: number): void {
-		this.modal.confirm({
+		this.nzModalService.confirm({
 			nzTitle: 'Вы действительно хотите удалить запись?',
 			nzOnOk: () => this.deleteResource(id)
 		});
@@ -177,7 +186,7 @@ export class ResourcesListComponent implements OnInit {
 			)
 			.subscribe(response => {
 				if (response) {
-					this.messageService.success('Ресурс успешно удалён');
+					this.nzMessageService.success('Ресурс успешно удалён');
 					this.paramsChange$.next({
 						pageSize: this.pageSize,
 						pageIndex: 1
@@ -187,7 +196,7 @@ export class ResourcesListComponent implements OnInit {
 	}
 	
 	showResourcePasswordModal(id: number, name: string): void {
-		this.modal.confirm({
+		this.nzModalService.confirm({
 			nzTitle: `Вы уверены, что хотите просмотреть свой пароль от ресурса <b>${name}</b>?`,
 			nzContent: '<b>Убедитесь, что никто кроме вас его не увидит</b>',
 			nzOnOk: () => this.showResourcePassword(id)
@@ -195,11 +204,10 @@ export class ResourcesListComponent implements OnInit {
 	}
 	
 	showResourcePassword(id: number): void {
-		this.modal.create({
+		this.nzModalService.info({
 			nzTitle: 'Просмотр пароля',
 			nzContent: ShowPasswordModalComponent,
-			nzFooter: null,
-			nzMaskClosable: false,
+			nzMaskClosable: true,
 			nzComponentParams: {
 				id
 			}
@@ -208,6 +216,6 @@ export class ResourcesListComponent implements OnInit {
 	
 	clearNameSearch(): void {
 		this.nameSearch = '';
-		this.search(null);
+		this.nameSearchChange$.next(null);
 	}
 }

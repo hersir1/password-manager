@@ -22,6 +22,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { SupportService } from './services/support.service';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { StartAppComponent } from './components/start-app/start-app.component';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 registerLocaleData(ru);
 
@@ -30,13 +32,14 @@ const NgZorroModules = [
 	NzMenuModule,
 	NzToolTipModule,
 	NzIconModule,
-	NzSpinModule
+	NzSpinModule,
+	NzButtonModule
 ];
 
 @NgModule({
 	declarations: [
 		AppComponent,
-  StartAppComponent
+		StartAppComponent
 	],
 	imports: [
 		BrowserModule,
@@ -45,7 +48,8 @@ const NgZorroModules = [
 		HttpClientModule,
 		BrowserAnimationsModule,
 		ReactiveFormsModule,
-		...NgZorroModules
+		...NgZorroModules,
+		NzDropDownModule
 	],
 	providers: [
 		{provide: NZ_I18N, useValue: ru_RU},

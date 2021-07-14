@@ -1,0 +1,20 @@
+<ng-container *ngIf="loading$ | async; else userInfo">
+    <app-loading [nzTip]="'Идёт удаление'"></app-loading>
+</ng-container>
+<ng-template #userInfo>
+    <nz-descriptions class="userInfo" nzTitle="Информация о пользователе" nzBordered nzLayout="vertical">
+        <nz-descriptions-item nzTitle="Логин">{{userService.user?.login}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Email">{{userService.user?.email}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Последний вход в приложение">{{userService.user?.lastLogin | date: 'dd.MM.yyyy HH:mm:ss'}}</nz-descriptions-item>
+    </nz-descriptions>
+    <div class="button-panel">
+        <button nz-button nzType="primary" [routerLink]="['/edit-user']">
+            Изменить
+            <i nz-icon nzType="edit" nzTheme="outline"></i>
+        </button>
+        <button nz-button nzType="primary" nzDanger (click)="deleteUserModal()">
+            Удалить
+            <i nz-icon nzType="delete" nzTheme="outline"></i>
+        </button>
+    </div>
+</ng-template>

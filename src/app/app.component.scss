@@ -16,25 +16,47 @@ nz-layout {
 
 .logo {
 	height: 32px;
-	margin: 16px;
+	margin: 1rem 1rem 1rem 1.5rem;
 	color: white;
 }
 
 nz-header {
 	background: #fff;
 	padding: 0;
+	margin: 0 15px;
 }
 
 nz-content {
-	margin: 0 16px;
+	margin: 10px 16px 0 16px;
 }
 
 .inner-content {
 	padding: 24px;
 	background: #fff;
 	overflow-y: auto;
+	height: 100%;
 }
 
 nz-footer {
 	text-align: center;
+}
+
+.header {
+	background: aliceblue;
+	display: flex;
+	justify-content: space-between;
+
+	i {
+		margin-top: 3px;
+	}
+
+	div:last-child {
+		margin-right: 1rem;
+
+		button {
+			border: none;
+			box-shadow: none;
+			background: inherit;
+		}
+	}
 }

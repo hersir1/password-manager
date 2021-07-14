@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
 		private modalService: ModalService,
 		private router: Router
 	) {
+		this.userService.user = null;
 	}
 	
 	ngOnInit(): void {
