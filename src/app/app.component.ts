@@ -3,10 +3,9 @@ import { SupportService } from './services/support.service';
 import { UserService } from './services/user.service';
 import { Router } from '@angular/router';
 
-/* TODO
-*   1) Если забыл мастер пароль (восстановление)
-*   2) стоп сервер
-* */
+/*TODO
+*  1) В footer запихать свои контакты
+*  2) mail */
 
 @Component({
 	selector: 'app-root',

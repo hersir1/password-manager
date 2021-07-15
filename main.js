@@ -1,11 +1,10 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
+﻿const { app, BrowserWindow } = require('electron');
 const { exec } = require('child_process');
 const fs = require('fs');
 
 const serverPath = `${process.cwd()}/server/dist`;
 
-startServer = () => {
+const startServer = () => {
 	let serverStartResult = exec(`node main`, { cwd: serverPath });
 	
 	serverStartResult.stderr.on('data', data => {
@@ -17,8 +16,8 @@ startServer = () => {
 	});
 };
 
-stopServer = () => {
-
+const stopServer = () => {
+	fetch('http://localhost:3000/shutdown');
 };
 
 function createWindow () {
@@ -34,7 +33,7 @@ function createWindow () {
 
 app.whenReady().then(() => {
 	createWindow();
-	startServer();
+	/*startServer();*/
 	
 	app.on('activate', function () {
 		if (BrowserWindow.getAllWindows().length === 0) createWindow()
@@ -43,4 +42,5 @@ app.whenReady().then(() => {
 
 app.on('window-all-closed', function () {
 	if (process.platform !== 'darwin') app.quit();
+	/*stopServer();*/
 })

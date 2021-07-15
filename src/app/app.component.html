@@ -23,6 +23,14 @@
                 <i nz-icon nzType="info-circle" nzTheme="outline"></i>
                 <span>О приложении</span>
             </li>
+            <li nz-menu-item [routerLink]="['/feedback']" nzMatchRouter>
+                <i nz-icon nzType="mail" nzTheme="outline"></i>
+                <span>Обратная связь</span>
+            </li>
+            <li nz-menu-item [routerLink]="['/change-log']" nzMatchRouter>
+                <i nz-icon nzType="project" nzTheme="outline"></i>
+                <span>Журнал изменений</span>
+            </li>
             <li nz-menu-item (click)="logout()" nzMatchRouter>
                 <i nz-icon nzType="logout" nzTheme="outline"></i>
                 <span>Выйти</span>
@@ -36,7 +44,7 @@
                     <i class="trigger" nz-icon [nzType]="sideMenuIsCollapsed ? 'menu-unfold' : 'menu-fold'"
                        (click)="sideMenuIsCollapsed = !sideMenuIsCollapsed"></i>
                 </div>
-                <ng-container *ngIf="userService.user">
+                <ng-container *ngIf="userService.user; else enterTmp">
                     <div>
                         <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomRight">
                             <i nz-icon nzType="user" nzTheme="outline"></i>
@@ -55,6 +63,12 @@
                         </nz-dropdown-menu>
                     </div>
                 </ng-container>
+                <ng-template #enterTmp>
+                    <div [routerLink]="['login']" class="pointer">
+                        <span id="enterSpan">Войти</span>
+                        <i nz-icon nzType="login" nzTheme="outline"></i>
+                    </div>
+                </ng-template>
             </div>
         </nz-header>
         <nz-content>

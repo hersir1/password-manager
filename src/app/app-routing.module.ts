@@ -34,6 +34,10 @@ const routes: Routes = [
 		path: 'edit-user',
 		loadChildren: () => import('./modules/edit-user/edit-user.module').then(m => m.EditUserModule),
 		canActivate: [AuthGuard]
+	},
+	{
+		path: 'change-log',
+		loadChildren: () => import('./modules/change-log/change-log.module').then(m => m.ChangeLogModule)
 	}
 ];
 
