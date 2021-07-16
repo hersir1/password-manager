@@ -23,10 +23,10 @@
                 <i nz-icon nzType="info-circle" nzTheme="outline"></i>
                 <span>О приложении</span>
             </li>
-            <li nz-menu-item [routerLink]="['/feedback']" nzMatchRouter>
+            <!--<li nz-menu-item [routerLink]="['/feedback']" nzMatchRouter>
                 <i nz-icon nzType="mail" nzTheme="outline"></i>
                 <span>Обратная связь</span>
-            </li>
+            </li>-->
             <li nz-menu-item [routerLink]="['/change-log']" nzMatchRouter>
                 <i nz-icon nzType="project" nzTheme="outline"></i>
                 <span>Журнал изменений</span>
@@ -76,7 +76,9 @@
                 <router-outlet></router-outlet>
             </div>
         </nz-content>
-        <!--<nz-footer>Footer</nz-footer>-->
+        <!--<nz-footer>
+
+        </nz-footer>-->
     </nz-layout>
 </nz-layout>
 <ng-template #serverStarting>

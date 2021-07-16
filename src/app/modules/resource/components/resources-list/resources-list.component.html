@@ -1,7 +1,3 @@
-<button nz-button nzType="primary" (click)="showAddResourceModal()">
-    Добавить
-    <i nz-icon nzType="plus-circle" nzTheme="outline"></i>
-</button>
 <nz-table
         id="resourceList"
         nzShowSizeChanger
@@ -17,9 +13,9 @@
     <thead>
     <tr>
         <th nzWidth="500px">Наименование ресурса</th>
-        <th nzWidth="180px" class="tableHeader">Пароль</th>
-        <th nzWidth="180px" class="tableHeader">Редактировать</th>
-        <th nzWidth="180px" class="tableHeader">Удалить</th>
+        <th nzWidth="180px" class="tableColumnHeader">Пароль</th>
+        <th nzWidth="180px" class="tableColumnHeader">Редактировать</th>
+        <th nzWidth="180px" class="tableColumnHeader">Удалить</th>
     </tr>
     <tr>
         <th>
@@ -53,7 +49,26 @@
 </nz-table>
 
 <ng-template #tableHeader>
-    <h1>Список ресурсов</h1>
+    <div class="tableHeader">
+        <h1>
+            Список ресурсов
+        </h1>
+        <h3>
+            <i
+                    class="pointer"
+                    nz-icon
+                    nzType="question-circle"
+                    nzTheme="outline"
+                    nz-popover
+                    nzPopoverTitle="Описание"
+                    nzPopoverContent="Это таблица с ресурсами и паролями к ним. Нажмите кнопку 'Добавить ресурс' и начните работу"
+            ></i>
+        </h3>
+    </div>
+    <button nz-button nzType="primary" (click)="showAddResourceModal()">
+        Добавить ресурс
+        <i nz-icon nzType="plus-circle" nzTheme="outline"></i>
+    </button>
 </ng-template>
 <ng-template #noResult>
     <nz-empty></nz-empty>

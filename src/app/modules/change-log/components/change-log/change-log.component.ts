@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Log } from '../../models/log.interface';
 
-/*TODO дату вписать*/
+/*TODO дату вписать перед релизом*/
 
 @Component({
 	selector: 'app-change-log',

@@ -45,7 +45,6 @@ export class ResourcesListComponent implements OnInit {
 	}
 	
 	ngOnInit(): void {
-		/*TODO после удаления loading здесь не отрабатывает*/
 		this.paramsChange$
 			.pipe(
 				tap((param) => {

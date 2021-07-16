@@ -26,7 +26,8 @@ function createWindow () {
 		height: 600,
 		icon: './dist/password-manager/assets/logo.svg'
 	})
-	
+
+	mainWindow.webContents.openDevTools();
 	mainWindow.maximize();
 	mainWindow.loadFile('./dist/password-manager/index.html')
 }
@@ -38,9 +39,9 @@ app.whenReady().then(() => {
 	app.on('activate', function () {
 		if (BrowserWindow.getAllWindows().length === 0) createWindow()
 	});
-})
+});
 
 app.on('window-all-closed', function () {
 	if (process.platform !== 'darwin') app.quit();
 	/*stopServer();*/
-})
+});

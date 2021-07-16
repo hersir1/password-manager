@@ -1,9 +1,12 @@
 <div id="changeLogContainer">
-    <h1>Журнал изменений</h1>
+    <h1 nz-typography>Журнал изменений</h1>
+    <p nz-typography>
+        Здесь отражаются все изменения в проекте
+    </p>
     <nz-divider></nz-divider>
 
     <ng-container *ngFor="let item of changeLog">
-        <h2>{{item.version}}</h2>
+        <h2>Версия {{item.version}}</h2>
 
         <code>{{item.date | date: 'dd.MM.yyyy'}}</code>
 

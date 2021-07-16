@@ -1,5 +1,5 @@
 ::ng-deep #resourceList {
-  .tableHeader {
+  .tableColumnHeader {
     text-align: center !important;
   }
 
@@ -8,6 +8,19 @@
 
     button {
       width: 147px;
+    }
+  }
+
+  nz-table-title-footer {
+    padding: 16px 0;
+
+    .tableHeader {
+      display: flex;
+      align-items: center;
+
+      h3 {
+        margin-left: 1rem;
+      }
     }
   }
 }

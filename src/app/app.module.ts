@@ -33,7 +33,8 @@ const NgZorroModules = [
 	NzToolTipModule,
 	NzIconModule,
 	NzSpinModule,
-	NzButtonModule
+	NzButtonModule,
+	NzDropDownModule
 ];
 
 @NgModule({
@@ -48,8 +49,7 @@ const NgZorroModules = [
 		HttpClientModule,
 		BrowserAnimationsModule,
 		ReactiveFormsModule,
-		...NgZorroModules,
-		NzDropDownModule
+		...NgZorroModules
 	],
 	providers: [
 		{provide: NZ_I18N, useValue: ru_RU},
