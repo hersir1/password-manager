@@ -9,28 +9,30 @@ import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { UserRoutingModule } from './user-routing.module';
 import { SharedModule } from '../../shared/shared.module';
+import { ResourcesDataSourceService } from '../resource/services/resources-data-source.service';
 
 const NgZorroModules = [
-	NzButtonModule,
-	NzIconModule,
-	NzDescriptionsModule
+    NzButtonModule,
+    NzIconModule,
+    NzDescriptionsModule
 ];
 
 @NgModule({
-	declarations: [
-		UserInfoComponent
-	],
-	imports: [
-		CommonModule,
-		ReactiveFormsModule,
-		RouterModule,
-		UserRoutingModule,
-		SharedModule,
-		...NgZorroModules
-	],
-	providers: [
-		UserDataSourceService
-	]
+    declarations: [
+        UserInfoComponent
+    ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule,
+        UserRoutingModule,
+        SharedModule,
+        ...NgZorroModules
+    ],
+    providers: [
+        UserDataSourceService,
+        ResourcesDataSourceService
+    ]
 })
 export class UserModule {
 }

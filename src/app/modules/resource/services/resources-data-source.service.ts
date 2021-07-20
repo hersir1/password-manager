@@ -74,4 +74,8 @@ export class ResourcesDataSourceService {
 	showResourcePassword(id: number): Observable<string> {
 		return this.httpClient.get<string>(`${this.baseUrl}/password/${id}`);
 	}
+
+	deleteAllUserResources(userId: number): Observable<boolean | null> {
+		return this.httpClient.delete<boolean | null>(`${this.baseUrl}/deleteAll/${userId}`);
+	}
 }

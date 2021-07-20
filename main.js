@@ -18,17 +18,20 @@ const startServer = () => {
 };
 
 const stopServer = async () => {
-	await axios.get('http://localhost:3000');
+	await axios.get('http://localhost:3000/shutdown');
 };
 
 function createWindow () {
 	const mainWindow = new BrowserWindow({
 		width: 800,
 		height: 600,
-		icon: './dist/password-manager/assets/logo.ico'
+		icon: './dist/password-manager/assets/logo.ico',
+		autoHideMenuBar: true,
+		darkTheme: true
 	})
 
-	mainWindow.webContents.openDevTools();
+	/*mainWindow.webContents.openDevTools();*/
+
 	mainWindow.maximize();
 	mainWindow.loadFile('./dist/password-manager/index.html')
 }
@@ -43,6 +46,7 @@ app.whenReady().then(() => {
 });
 
 app.on('window-all-closed', function () {
-	if (process.platform !== 'darwin') app.quit();
-	stopServer();
+	stopServer().then(() => {
+		if (process.platform !== 'darwin') app.quit();
+	});
 });

@@ -209,7 +209,8 @@ export class ResourcesListComponent implements OnInit {
 			nzMaskClosable: true,
 			nzComponentParams: {
 				id
-			}
+			},
+			nzWidth: '700px'
 		});
 	}
 	

@@ -63,7 +63,6 @@ export class RegisterComponent implements OnInit {
 					this.messageService.success('Пользователь успешно зарегистрирован');
 					
 					this.userService.user = response;
-					
 					this.router.navigate(['']);
 				}
 			});
