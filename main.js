@@ -1,8 +1,9 @@
 ﻿const { app, BrowserWindow } = require('electron');
 const { exec } = require('child_process');
 const fs = require('fs');
+const axios = require('axios');
 
-const serverPath = `${process.cwd()}/server/dist`;
+const serverPath = `${process.cwd()}/resources/server/dist`;
 
 const startServer = () => {
 	let serverStartResult = exec(`node main`, { cwd: serverPath });
@@ -16,8 +17,8 @@ const startServer = () => {
 	});
 };
 
-const stopServer = () => {
-	fetch('http://localhost:3000/shutdown');
+const stopServer = async () => {
+	await axios.get('http://localhost:3000');
 };
 
 function createWindow () {
@@ -34,7 +35,7 @@ function createWindow () {
 
 app.whenReady().then(() => {
 	createWindow();
-	/*startServer();*/
+	startServer();
 	
 	app.on('activate', function () {
 		if (BrowserWindow.getAllWindows().length === 0) createWindow()
@@ -43,5 +44,5 @@ app.whenReady().then(() => {
 
 app.on('window-all-closed', function () {
 	if (process.platform !== 'darwin') app.quit();
-	/*stopServer();*/
+	stopServer();
 });

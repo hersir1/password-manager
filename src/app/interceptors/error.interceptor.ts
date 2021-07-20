@@ -19,7 +19,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 		if (!request.url.includes('ping')) {
 			return next.handle(request).pipe(
 				catchError((err: HttpErrorResponse) => {
-					this.modalService.createErrorModal(err.error);
+					this.modalService.createErrorModal(err.error.message);
 					return throwError(err);
 				})
 			);
