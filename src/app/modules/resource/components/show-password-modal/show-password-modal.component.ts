@@ -1,26 +1,33 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject, timer } from 'rxjs';
 import { ResourcesDataSourceService } from '../../services/resources-data-source.service';
-import { finalize } from 'rxjs/operators';
+import { finalize, map, take } from 'rxjs/operators';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { NzModalRef } from 'ng-zorro-antd/modal';
 
 @UntilDestroy()
 @Component({
 	selector: 'app-show-password-modal',
 	templateUrl: './show-password-modal.component.html',
 	styleUrls: ['./show-password-modal.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	providers: [
+		ResourcesDataSourceService
+	]
 })
 export class ShowPasswordModalComponent implements OnInit {
 	
 	@Input()
 	id: number;
 	
+	timer$: Observable<number>;
+	
 	loading$: Subject<boolean> = new Subject<boolean>();
 	password: string;
 	
 	constructor(
-		private resourcesDataSourceService: ResourcesDataSourceService
+		private resourcesDataSourceService: ResourcesDataSourceService,
+		private modal: NzModalRef
 	) {
 	}
 	
@@ -35,6 +42,16 @@ export class ShowPasswordModalComponent implements OnInit {
 				})
 			)
 			.subscribe(response => {
+				const start = 10;
+				this.timer$ = timer(0, 1000)
+					.pipe(
+						map(i => start - i),
+						take(start + 1),
+						finalize(() => {
+							this.modal.close();
+						})
+					);
+				
 				this.password = response;
 			});
 	}

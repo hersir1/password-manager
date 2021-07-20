@@ -15,6 +15,7 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { ResourceRoutingModule } from './resource-routing.module';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
 const NgZorroModules = [
 	NzInputModule,
@@ -22,7 +23,8 @@ const NgZorroModules = [
 	NzButtonModule,
 	NzTableModule,
 	NzEmptyModule,
-	NzSpinModule
+	NzSpinModule,
+	NzAlertModule
 ];
 
 @NgModule({
@@ -38,7 +40,7 @@ const NgZorroModules = [
 		FormsModule,
 		ResourceRoutingModule,
 		...NgZorroModules,
-		NzAlertModule
+		NzPopoverModule
 	],
 	providers: [
 		ResourceService,

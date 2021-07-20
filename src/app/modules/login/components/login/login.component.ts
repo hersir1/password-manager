@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 
@@ -30,8 +30,10 @@ export class LoginComponent implements OnInit {
 		private userService: UserService,
 		private loginDataSourceService: LoginDataSourceService,
 		private modalService: ModalService,
-		private router: Router
+		private router: Router,
+		private cdr: ChangeDetectorRef
 	) {
+		this.userService.user = null;
 	}
 	
 	ngOnInit(): void {

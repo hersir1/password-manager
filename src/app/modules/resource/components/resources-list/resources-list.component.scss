@@ -1,0 +1,26 @@
+::ng-deep #resourceList {
+  .tableColumnHeader {
+    text-align: center !important;
+  }
+
+  .tableTdAction {
+    text-align: center;
+
+    button {
+      width: 147px;
+    }
+  }
+
+  nz-table-title-footer {
+    padding: 16px 0;
+
+    .tableHeader {
+      display: flex;
+      align-items: center;
+
+      h3 {
+        margin-left: 1rem;
+      }
+    }
+  }
+}

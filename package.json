@@ -1,6 +1,6 @@
 {
   "name": "password-manager",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "main.js",
   "scripts": {
     "ng": "ng",
@@ -10,8 +10,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "ng build && electron .",
-    "pack": "electron-packager . --overwrite",
-    "pack-prod": "ng build && electron-packager . --overwrite --asar --all"
+    "pack-dev": "electron-packager . --overwrite --out=C:\\Users\\User\\Desktop --icon=src/assets/logo.ico",
+    "pack-prod": "ng build --prod && electron-packager . --overwrite --mac --win",
+    "pack-win-prod": "ng build --prod && electron-packager . --overwrite --win --out=C:\\Users\\User\\Desktop --icon=src/assets/logo.ico"
   },
   "private": true,
   "dependencies": {
@@ -24,6 +25,7 @@
     "@angular/platform-browser-dynamic": "~11.2.14",
     "@angular/router": "~11.2.14",
     "@ngneat/until-destroy": "^8.0.4",
+    "axios": "^0.21.1",
     "ng-zorro-antd": "^11.4.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

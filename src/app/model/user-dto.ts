@@ -3,4 +3,5 @@ export interface UserDto {
   login: string;
   email: string;
   password: string;
+  lastLogin: Date;
 }

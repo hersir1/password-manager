@@ -14,7 +14,10 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 	selector: 'app-add-resource-modal',
 	templateUrl: './add-resource-modal.component.html',
 	styleUrls: ['./add-resource-modal.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	providers: [
+		ResourcesDataSourceService
+	]
 })
 export class AddResourceModalComponent {
 	
@@ -33,7 +36,7 @@ export class AddResourceModalComponent {
 		this.formGroup = this.formBuilder.group({
 			name: [null, [Validators.required]],
 			password: [null, [Validators.required]],
-			userId: [this.userService.user.id]
+			userId: [this.userService.user!.id]
 		});
 	}
 	

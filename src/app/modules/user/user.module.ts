@@ -1,36 +1,38 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { UserDataSourceService } from './services/user-data-source.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { RouterModule } from '@angular/router';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { UserInfoComponent } from './components/user-info/user-info.component';
+import { UserRoutingModule } from './user-routing.module';
+import { SharedModule } from '../../shared/shared.module';
+import { ResourcesDataSourceService } from '../resource/services/resources-data-source.service';
 
 const NgZorroModules = [
-	NzInputModule,
-	NzAlertModule,
-	NzButtonModule,
-	NzIconModule,
-	NzDescriptionsModule
+    NzButtonModule,
+    NzIconModule,
+    NzDescriptionsModule
 ];
 
 @NgModule({
-	declarations: [
-		EditUserComponent
-	],
-	imports: [
-		CommonModule,
-		ReactiveFormsModule,
-		RouterModule,
-		...NgZorroModules
-	],
-	providers: [
-		UserDataSourceService
-	]
+    declarations: [
+        UserInfoComponent
+    ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule,
+        UserRoutingModule,
+        SharedModule,
+        ...NgZorroModules
+    ],
+    providers: [
+        UserDataSourceService,
+        ResourcesDataSourceService
+    ]
 })
 export class UserModule {
 }

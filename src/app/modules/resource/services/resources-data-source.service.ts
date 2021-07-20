@@ -4,9 +4,7 @@ import { Observable } from 'rxjs';
 import { ResourceDto } from '../models/resource-dto.interface';
 import { Resource } from '../models/resource.interface';
 
-@Injectable({
-	providedIn: 'root'
-})
+@Injectable()
 export class ResourcesDataSourceService {
 	
 	baseUrl: string = 'http://localhost:3000/resource';
@@ -75,5 +73,9 @@ export class ResourcesDataSourceService {
 	
 	showResourcePassword(id: number): Observable<string> {
 		return this.httpClient.get<string>(`${this.baseUrl}/password/${id}`);
+	}
+
+	deleteAllUserResources(userId: number): Observable<boolean | null> {
+		return this.httpClient.delete<boolean | null>(`${this.baseUrl}/deleteAll/${userId}`);
 	}
 }

@@ -13,7 +13,10 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 	selector: 'app-edit-resource-modal',
 	templateUrl: './edit-resource-modal.component.html',
 	styleUrls: ['./edit-resource-modal.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	providers: [
+		ResourcesDataSourceService
+	]
 })
 export class EditResourceModalComponent implements OnInit {
 	
@@ -37,7 +40,7 @@ export class EditResourceModalComponent implements OnInit {
 			id: [null],
 			name: [null, [Validators.required]],
 			password: [null, [Validators.required]],
-			userId: [this.userService.user.id]
+			userId: [this.userService.user!.id]
 		});
 	}
 	

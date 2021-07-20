@@ -18,11 +18,26 @@ const routes: Routes = [
 	},
 	{
 		path: 'recover-password',
-		loadChildren: () => import('./modules/recover-password/recover-password.module').then(m => m.RecoverPasswordModule)
+		loadChildren: () => import('./modules/recover-password/recover-password.module').then(m => m.RecoverPasswordModule),
+		canActivate: [AuthGuard]
 	},
 	{
 		path: 'about',
 		loadChildren: () => import('./modules/about/about.module').then(m => m.AboutModule)
+	},
+	{
+		path: 'user-info',
+		loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule),
+		canActivate: [AuthGuard]
+	},
+	{
+		path: 'edit-user',
+		loadChildren: () => import('./modules/edit-user/edit-user.module').then(m => m.EditUserModule),
+		canActivate: [AuthGuard]
+	},
+	{
+		path: 'change-log',
+		loadChildren: () => import('./modules/change-log/change-log.module').then(m => m.ChangeLogModule)
 	}
 ];
 
