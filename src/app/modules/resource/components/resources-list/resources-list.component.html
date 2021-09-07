@@ -1,75 +1,81 @@
 <nz-table
-        id="resourceList"
-        nzShowSizeChanger
-        [nzFrontPagination]="false"
-        [nzLoading]="loading$ | async"
-        [nzTotal]="total"
-        [nzTitle]="tableHeader"
-        [nzData]="resources"
-        (nzQueryParams)="onQueryChangeParams($event)"
-        [nzNoResult]="noResult"
-        #resourcesTable
+		id="resourceList"
+		nzShowSizeChanger
+		[nzFrontPagination]="false"
+		[nzLoading]="loading$ | async"
+		[nzTotal]="total"
+		[nzTitle]="tableHeader"
+		[nzData]="resources"
+		(nzQueryParams)="onQueryChangeParams($event)"
+		[nzNoResult]="noResult"
+		#resourcesTable
 >
-    <thead>
-    <tr>
-        <th nzWidth="500px">Наименование ресурса</th>
-        <th nzWidth="180px" class="tableColumnHeader">Пароль</th>
-        <th nzWidth="180px" class="tableColumnHeader">Редактировать</th>
-        <th nzWidth="180px" class="tableColumnHeader">Удалить</th>
-    </tr>
-    <tr>
-        <th>
-            <nz-input-group [nzSuffix]="inputClearTpl">
-                <input type="text" nz-input (ngModelChange)="nameSearchChange$.next($event)" [(ngModel)]="nameSearch">
-            </nz-input-group>
-            <ng-template #inputClearTpl>
-                <i nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="nameSearch"
-                   (click)="clearNameSearch()"></i>
-            </ng-template>
-        </th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let data of resourcesTable.data">
-        <td>{{data.name}}</td>
-        <td class="tableTdAction">
-            <button nz-button nzDanger (click)="showResourcePasswordModal(data.id, data.name)">Показать пароль</button>
-        </td>
-        <td class="tableTdAction">
-            <button nz-button nzType="primary" (click)="showEditResourceModal(data.id)">Редактировать</button>
-        </td>
-        <td class="tableTdAction">
-            <button nz-button nzDanger nzType="primary" (click)="showDeleteModal(data.id)">Удалить</button>
-        </td>
-    </tr>
-    </tbody>
+	<thead>
+	<tr>
+		<th nzWidth="500px">Наименование ресурса</th>
+		<th nzWidth="180px" class="tableColumnHeader">Пароль</th>
+		<th nzWidth="180px" class="tableColumnHeader">Редактировать</th>
+		<th nzWidth="180px" class="tableColumnHeader">Удалить</th>
+	</tr>
+	<tr>
+		<th>
+			<nz-input-group [nzSuffix]="inputClearTpl">
+				<input
+						type="text"
+						nz-input
+						placeholder="Поиск по имени..."
+						(ngModelChange)="nameSearchChange$.next($event)"
+						[(ngModel)]="nameSearch"
+				>
+			</nz-input-group>
+			<ng-template #inputClearTpl>
+				<i nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" *ngIf="nameSearch"
+				   (click)="clearNameSearch()"></i>
+			</ng-template>
+		</th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr *ngFor="let data of resourcesTable.data">
+		<td>{{data.name}}</td>
+		<td class="tableTdAction">
+			<button nz-button nzDanger (click)="showResourcePasswordModal(data.id, data.name)">Показать пароль</button>
+		</td>
+		<td class="tableTdAction">
+			<button nz-button nzType="primary" (click)="showEditResourceModal(data.id)">Редактировать</button>
+		</td>
+		<td class="tableTdAction">
+			<button nz-button nzDanger nzType="primary" (click)="showDeleteModal(data.id)">Удалить</button>
+		</td>
+	</tr>
+	</tbody>
 </nz-table>
 
 <ng-template #tableHeader>
-    <div class="tableHeader">
-        <h1>
-            Список ресурсов
-        </h1>
-        <h3>
-            <i
-                    class="pointer"
-                    nz-icon
-                    nzType="question-circle"
-                    nzTheme="outline"
-                    nz-popover
-                    nzPopoverTitle="Описание"
-                    nzPopoverContent="Это таблица с ресурсами и паролями к ним. Нажмите кнопку 'Добавить ресурс' и начните работу"
-            ></i>
-        </h3>
-    </div>
-    <button nz-button nzType="primary" (click)="showAddResourceModal()">
-        Добавить ресурс
-        <i nz-icon nzType="plus-circle" nzTheme="outline"></i>
-    </button>
+	<div class="tableHeader">
+		<h1>
+			Список ресурсов
+		</h1>
+		<h3>
+			<i
+					class="pointer"
+					nz-icon
+					nzType="question-circle"
+					nzTheme="outline"
+					nz-popover
+					nzPopoverTitle="Описание"
+					nzPopoverContent="Это таблица с ресурсами и паролями к ним. Нажмите кнопку 'Добавить ресурс' и начните работу"
+			></i>
+		</h3>
+	</div>
+	<button nz-button nzType="primary" (click)="showAddResourceModal()">
+		Добавить ресурс
+		<i nz-icon nzType="plus-circle" nzTheme="outline"></i>
+	</button>
 </ng-template>
 <ng-template #noResult>
-    <nz-empty></nz-empty>
+	<nz-empty></nz-empty>
 </ng-template>
