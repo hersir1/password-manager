@@ -82,7 +82,11 @@ export class ResourcesListComponent implements OnInit {
 			.pipe(
 				untilDestroyed(this),
 				debounceTime(1000),
+				tap(() => this.loading$.next(true)),
 				distinctUntilChanged((prev, curr) => prev === curr),
+				finalize(() => {
+					this.loading$.next(false);
+				})
 			)
 			.subscribe(value => {
 				this.search(value);
