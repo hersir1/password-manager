@@ -1,9 +1,9 @@
 <form [formGroup]="formGroup" (ngSubmit)="addResource()">
     <div class="control-container">
-        <nz-input-group nzPrefixIcon="user"
+        <nz-input-group nzPrefixIcon="database"
                         [ngClass]="{'input-group-error': formGroup.get('name')?.touched && formGroup.get('name')?.invalid}"
         >
-            <input type="text" nz-input formControlName="name" placeholder="Наименование ресурса"/>
+            <input type="text" nz-input formControlName="name" placeholder="Наименование ресурса"></input>
         </nz-input-group>
         <ng-container *ngIf="formGroup.get('name')?.touched && formGroup.get('name')?.hasError('required')">
             <span>Наименование ресурса</span>
@@ -16,7 +16,7 @@
                 [nzSuffix]="suffixTemplate"
         >
             <input [type]="passwordVisible ? 'text' : 'password'" nz-input placeholder="Введите пароль"
-                   formControlName="password"/>
+                   formControlName="password"></input>
             <ng-template #suffixTemplate>
                 <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
                    (click)="passwordVisible = !passwordVisible"></i>

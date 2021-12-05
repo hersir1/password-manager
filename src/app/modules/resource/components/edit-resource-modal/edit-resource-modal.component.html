@@ -1,6 +1,6 @@
 <form [formGroup]="formGroup" (ngSubmit)="updateResource()">
     <div class="control-container">
-        <nz-input-group nzPrefixIcon="user"
+        <nz-input-group nzPrefixIcon="database"
                         [ngClass]="{'input-group-error': formGroup.get('name')?.touched && formGroup.get('name')?.invalid}"
         >
             <input type="text" nz-input formControlName="name" placeholder="Наименование ресурса"/>
